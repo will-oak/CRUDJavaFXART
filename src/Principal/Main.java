@@ -3,6 +3,7 @@ import java.sql.SQLException;
 
 import control.FuncionarioControl;
 import control.MainController;
+import control.ProdArteControl;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ public class Main extends Application {
 
 
 private MainController mainController = new MainController();
+private ProdArteControl arteController = new ProdArteControl();
 //private FuncionarioControl funcControl = new FuncionarioControl();
 	
 	
@@ -37,13 +39,18 @@ private MainController mainController = new MainController();
         TextField tfCPFFuncionario = new TextField("");
         
 
+        Bindings.bindBidirectional(mainController.nomeProperty(), tfNomeFuncionario.textProperty());
+        Bindings.bindBidirectional(mainController.CPFProperty(), tfCPFFuncionario.textProperty());
+        Bindings.bindBidirectional(mainController.IdProperty(), tfCodigoFuncionario.textProperty());
         
+
 
 
         Button btnInserirFuncionario = new Button("Incluir");
         Button btnConsultarFuncionario = new Button("Pesquisar");
         Button btnAtualizarFuncionario = new Button("Atualizar");
         Button btnExcluirFuncionario = new Button("Excluir");
+        Button btnLimpaFuncionario = new Button("Limpar Campos");
         Button cadastrarArte = new Button("Cadastrar Arte");
     	
     	//SplashScreen
@@ -67,7 +74,16 @@ private MainController mainController = new MainController();
 				e1.printStackTrace();
 			}
 		});
-        
+     /*   
+        btnLimpaFuncionario.setOnAction( e -> {
+			try {
+				mainController.LimpaCampos();
+			} catch (ClassNotFoundException | SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+       */ 
         btnConsultarFuncionario.setOnAction(e ->	{
         try {
 				mainController.consultar();
@@ -76,11 +92,15 @@ private MainController mainController = new MainController();
 				e1.printStackTrace();
 			}
 		});
+        
+      /* ARRUMANDO OS TEXTOS  
     //    salvar.setPrefWidth(80.0);
      //   salvar.setPrefHeight(80.0);
         
         //txtCpf.setPrefWidth(80.0);
       //  txtCpf.setPrefHeight(80.0);
+        
+        */
         
         FlowPane flowPane = new FlowPane();
         GridPane gridePane = new GridPane();
@@ -111,6 +131,7 @@ private MainController mainController = new MainController();
         Button btnConsultarArte = new Button("Pesquisar");
         Button btnAtualizarArte = new Button("Atualizar");
         Button btnExcluirArte = new Button("Excluir");
+        
         Button cadastrarFunc = new Button("Cadastrar Funcionario");
         
         
@@ -156,10 +177,44 @@ private MainController mainController = new MainController();
         
         flowPane2.getChildren().addAll(btnInserirArte, btnConsultarArte, btnAtualizarArte, btnExcluirArte, cadastrarFunc);
         
+        Bindings.bindBidirectional(arteController.idObraProperty(), tfIdObra.textProperty());
+        Bindings.bindBidirectional(arteController.nomeObraProperty(), tfNomeObra.textProperty());
+        Bindings.bindBidirectional(arteController.artistaProperty(), tfNomeArtista.textProperty());
+        Bindings.bindBidirectional(arteController.materialProperty(), tfMaterial.textProperty());
+        Bindings.bindBidirectional(arteController.valorProperty(), tfValor.textProperty());
+        Bindings.bindBidirectional(arteController.anoProperty(), tfAno.textProperty());
                 
         painel2.add(flowPane2, 1,6);
 
         painel.add(mainController.getTable(), 0, 7);
+        painel2.add(arteController.getTable(), 1, 8);
+        
+        btnInserirArte.setOnAction( e -> {
+			try {
+				arteController.inserirArte();
+			} catch (ClassNotFoundException | SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+        
+        btnConsultarArte.setOnAction( e -> {
+			try {
+				arteController.buscarArte();
+			} catch (ClassNotFoundException | SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+        
+        btnLimpaArte.setOnAction( e -> {
+			try {
+				arteController.buscarArte();
+			} catch (ClassNotFoundException | SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
         
         
         //Evento do botão cadastrarArte
@@ -181,18 +236,15 @@ private MainController mainController = new MainController();
        };     
 
        cadastrarFunc.setOnAction(event2);
+       
+       
     
 
   //  btnInserirFuncionario.setOnAction(b -> funcControl.inserirFuncionario());
     
     
     
-       Bindings.bindBidirectional(mainController.nomeProperty(), tfNomeFuncionario.textProperty());
-       Bindings.bindBidirectional(mainController.CPFProperty(), tfCPFFuncionario.textProperty());
-       Bindings.bindBidirectional(mainController.IdProperty(), tfCodigoFuncionario.textProperty());
-    
-    
-    
+
     }
     
 

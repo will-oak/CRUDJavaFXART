@@ -11,8 +11,8 @@ CREATE TABLE funcionario (
 
 CREATE TABLE prodarte (
         id_obra            int             AUTO_INCREMENT,
-        nome_obra         varchar(100)     NOT NULL,
-        material           varchar(200)    NOT NULL,
+        obra              varchar(100)     NOT NULL,
+        material          varchar(200)    NOT NULL,
         artista           varchar(300)    NOT NULL,
         ano               int             NOT NULL,
         valor             float           NOT NULL,

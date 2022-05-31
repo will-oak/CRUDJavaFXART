@@ -43,8 +43,8 @@ public class TesteDAO   {
      
      
      */
-     //List <ProdArte> artes = arte.buscarArtes();
-     //System.out.println(artes);
+     List <ProdArte> artes = arte.buscarArtes();
+     System.out.println(artes);
      
           
    //  List <Funcionario> funcionarios = funcDao.buscaFuncionarios();

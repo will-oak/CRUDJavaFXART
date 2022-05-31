@@ -20,15 +20,15 @@ private Connection c;
 
 	@Override
 	public void inserirArte(ProdArte a) throws SQLException {
-		String sql = "INSERT INTO prodarte (nome_obra, material, artista, ano, valor) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO prodarte (obra, material, artista, ano, valor) VALUES (?,?,?,?,?)";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		//ps.setInt(1, a.getIdObra());
 		ps.setString(1, a.getNomeObra());
 		ps.setString(2, a.getMaterial());
 		ps.setString(3, a.getArtista());
-		ps.setInt(4, a.getAno());
-		ps.setFloat(5, a.getValor());
+		ps.setInt   (4, a.getAno());
+		ps.setFloat (5, a.getValor());
 		
 		ps.execute();
 		ps.close();
@@ -36,7 +36,7 @@ private Connection c;
 
 	@Override
 	public void atualizarArte(ProdArte a) throws SQLException {
-		String sql = "UPDATE prodarte SET nome_obra = ?, material = ?, artista = ?, ano = ?, valor = ? WHERE id_obra = ?";
+		String sql = "UPDATE prodarte SET obra = ?, material = ?, artista = ?, ano = ?, valor = ? WHERE id_obra = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		
@@ -63,7 +63,7 @@ private Connection c;
 
 	@Override
 	public ProdArte buscarArte(ProdArte a) throws SQLException {
-		String sql = "SELECT id_obra, nome_obra, material, artista, ano, valor FROM prodarte WHERE id_obra = ?";
+		String sql = "SELECT id_obra, obra, material, artista, ano, valor FROM prodarte WHERE id_obra = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, a.getIdObra());
@@ -72,7 +72,7 @@ private Connection c;
 		ResultSet rs = ps.executeQuery();
 		
 		if (rs.next()) {
-			a.setNomeObra(rs.getString("nome_obra"));
+			a.setNomeObra(rs.getString("obra"));
 			a.setArtista(rs.getString("artista"));
 			cont++;
 		}
@@ -89,8 +89,8 @@ private Connection c;
 
 	@Override
 	public List<ProdArte> buscarArtes() throws SQLException {
-		String sql = "SELECT id_obra, nome_obra, material, artista, ano, valor FROM prodarte";
-		
+		String sql = "SELECT id_obra, obra, material, artista, ano, valor FROM prodarte";
+	
 		PreparedStatement ps = c.prepareStatement(sql);
 		
 		ResultSet rs = ps.executeQuery();
@@ -100,7 +100,7 @@ private Connection c;
 		while (rs.next()) {
 			ProdArte a = new ProdArte();
 			a.setIdObra(rs.getInt("id_obra"));
-			a.setNomeObra(rs.getString("nome_obra"));
+			a.setNomeObra(rs.getString("obra"));
 			a.setArtista(rs.getString("artista"));
 			a.setAno(rs.getInt("ano"));
 			a.setMaterial(rs.getString("material"));

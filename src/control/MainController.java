@@ -21,8 +21,7 @@ public class MainController {
 
 
 	private ObservableList<Funcionario> funcionario = FXCollections.observableArrayList();
-	
-	
+	private TableView<Funcionario> table = new TableView<>();
 	private StringProperty nomeFunc = new SimpleStringProperty("");
 	private StringProperty cpf = new SimpleStringProperty();
 	private StringProperty idFunc = new SimpleStringProperty();
@@ -44,15 +43,8 @@ public class MainController {
     }
 	
 	
-	private StringProperty idObra = new SimpleStringProperty("");
-	private StringProperty nomeObra = new SimpleStringProperty("");
-	private StringProperty nomeArtista = new SimpleStringProperty("");
-	private StringProperty valor = new SimpleStringProperty("");
-	private StringProperty ano = new SimpleStringProperty("");
 	
-	private StringProperty material = new SimpleStringProperty("");
 	
-	private TableView<Funcionario> table = new TableView<>();
 	
 	
 		
