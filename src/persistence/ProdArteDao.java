@@ -63,17 +63,22 @@ private Connection c;
 
 	@Override
 	public ProdArte buscarArte(ProdArte a) throws SQLException {
-		String sql = "SELECT id_obra, obra, material, artista, ano, valor FROM prodarte WHERE id_obra = ?";
+		String sql = "SELECT id_obra, obra, material, artista, ano, valor FROM prodarte WHERE obra = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, a.getIdObra());
+		ps.setString(1, a.getNomeObra());
 		
 		int cont = 0;
 		ResultSet rs = ps.executeQuery();
 		
 		if (rs.next()) {
-			a.setNomeObra(rs.getString("obra"));
+		//	a.setNomeObra(rs.getString("obra"));
+			a.setIdObra(rs.getInt("id_obra"));
 			a.setArtista(rs.getString("artista"));
+			a.setAno(rs.getInt("ano"));
+			a.setMaterial(rs.getString("material"));
+			a.setValor(rs.getFloat("valor"));
+	
 			cont++;
 		}
 		

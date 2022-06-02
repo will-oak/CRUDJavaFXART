@@ -5,35 +5,60 @@ import java.util.List;
 
 import model.Funcionario;
 import persistence.FuncionarioDao;
+import persistence.IFuncionarioDao;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FuncionarioControl implements IFuncionarioControl {
-	
-	private TextField tfCodigoFuncionario;
-	private TextField tfNomeFuncionario;
-	private TextField tfCPFFuncionario;
-	private TextArea taListaFuncionarios;
-	
 
-	
+	//private TextArea taListaFuncionarios;
+	private ObservableList<Funcionario> funcObsList = FXCollections.observableArrayList();
+	private TableView<Funcionario> tableFunc = new TableView<>();
+	private StringProperty nomeFunc = new SimpleStringProperty("");
+	private StringProperty cpf = new SimpleStringProperty();
+	private StringProperty idFunc = new SimpleStringProperty();
 
-	public FuncionarioControl(TextField tfCodigoFuncionario, TextField tfNomeFuncionario, TextField tfCPFFuncionario,
-			TextArea taListaFuncionarios) {
-		this.tfCodigoFuncionario = tfCodigoFuncionario;
-		this.tfNomeFuncionario = tfNomeFuncionario;
-		this.tfCPFFuncionario = tfCPFFuncionario;
-		this.taListaFuncionarios = taListaFuncionarios;
+	public StringProperty nomeProperty() {
+		return nomeFunc;
+	}
+
+	public StringProperty CPFProperty() {
+		return cpf;
+	}
+
+	public StringProperty IdProperty() {
+		return idFunc;
+	}
+	
+	
+	
+	public FuncionarioControl() {
+		
+		TableColumn<Funcionario, String> col2 = new TableColumn<>("Nome do Funcionario");
+		col2.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		TableColumn<Funcionario, String> col3 = new TableColumn<>("CPF");
+		col3.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		tableFunc.getColumns().addAll(col2, col3);
+     	tableFunc.setItems(funcObsList);
+
+
 	}
 
 	@Override
-	public void inserirFuncionario(Funcionario f) throws ClassNotFoundException, SQLException {
-		FuncionarioDao fDao = new FuncionarioDao();
-		fDao.insereFuncionario(f);
-		limpaCamposFuncionario();
-		buscarFuncionarios();
+	public void inserirFuncionario() throws ClassNotFoundException, SQLException {
+		Funcionario f = new Funcionario();
+		FuncionarioDao fd = new FuncionarioDao();
+		f.setNome(nomeFunc.get());
+		f.setCpf(Integer.parseInt(cpf.get())); 
+		funcObsList.add(f);
+		fd.insereFuncionario(f);
 	}
 
 	@Override
@@ -53,39 +78,49 @@ public class FuncionarioControl implements IFuncionarioControl {
 	}
 
 	@Override
-	public void buscarFuncionario(Funcionario f) throws ClassNotFoundException, SQLException {
+	public void buscarFuncionario() throws ClassNotFoundException, SQLException {
 		limpaCamposFuncionario();
+		IFuncionarioDao funcDao = new FuncionarioDao();
+		List<Funcionario> listaFunc = funcDao.buscaFuncionarios();
+		
+		for (Funcionario f : listaFunc) {
+			if (f != null && f.getNome().contains(nomeFunc.get())) {
+				nomeFunc.set(f.getNome());
+				idFunc.set(Integer.toString(f.getId()));
+				cpf.set(Integer.toString(f.getCpf()));
+				break;
+			}
+		}	    	
 
-		FuncionarioDao fDao = new FuncionarioDao();
-		f = fDao.buscaFuncionario(f);
-
-		tfCodigoFuncionario.setText(String.valueOf(f.getId()));
-		tfNomeFuncionario.setText(f.getNome());
-		tfCPFFuncionario.setText(String.valueOf(f.getCpf()));
-	
 	}
+
 
 	@Override
 	public void buscarFuncionarios() throws ClassNotFoundException, SQLException {
 		limpaCamposFuncionario();
-		taListaFuncionarios.setText("");
-		
 		FuncionarioDao fDao = new FuncionarioDao();
 		List<Funcionario> listaFuncionarios = fDao.buscaFuncionarios();
+		funcObsList.clear();
+		funcObsList.addAll(listaFuncionarios);
 		
 		StringBuffer buffer = new StringBuffer("Código\t\t\t\tNome\t\t\t\tCPF\n");
 		for (Funcionario f : listaFuncionarios ) {
 			buffer.append(f.getId()+"\t\t\t\t\t"+f.getNome()+"\t\t\t\t"+f.getCpf()+"\n");
 		}
-		
-		taListaFuncionarios.setText(buffer.toString());
-		
-	}
-	
-	private void limpaCamposFuncionario() {
-		tfCodigoFuncionario.setText("");
-		tfNomeFuncionario.setText("");
-		tfCPFFuncionario.setText("");
+
+
 	}
 
+	public void limpaCamposFuncionario() {
+		nomeFunc.set("");
+		idFunc.set("");
+		cpf.set("");
+
+	}
+
+
+	public TableView getTable() {
+		return tableFunc;
+	}
 }
+

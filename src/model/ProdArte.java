@@ -8,8 +8,15 @@ public class ProdArte {
 	private String artista;
 	private int ano;
 	private float valor;
+	private String vazioArte = null;
 	
 	
+	public String getVazioArte() {
+		return vazioArte;
+	}
+	public void setVazioArte(String vazioArte) {
+		this.vazioArte = vazioArte;
+	}
 	public int getIdObra() {
 		return idObra;
 	}
@@ -49,8 +56,7 @@ public class ProdArte {
 	@Override
 	public String toString() {
 		return "ProdArte [idObra=" + idObra + ", nomeObra=" + nomeObra + ", material=" + material + ", artista="
-				+ artista + ", ano=" + ano + ", valor=" + valor + "]";
+				+ artista + ", ano=" + ano + ", valor=" + valor + ", vazioArte=" + vazioArte + "]";
 	}
 
-	
 }

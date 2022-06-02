@@ -6,9 +6,6 @@ public class Funcionario {
 	private String nome;
 	private int cpf;
 	
-	
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -33,7 +30,6 @@ public class Funcionario {
 		return "Funcionario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + "]";
 	}
 
-	
-	
+
 	
 }

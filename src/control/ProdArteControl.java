@@ -28,8 +28,6 @@ public class ProdArteControl implements IProdArteControl {
 	private TextField tfMaterial;
 	private TextField tfValor;
 	private TextField tfAno;
-	private TextArea taListaArtes;
-
 	private StringProperty idObra = new SimpleStringProperty("");
 	private StringProperty nomeObra = new SimpleStringProperty("");
 	private StringProperty nomeArtista = new SimpleStringProperty("");
@@ -40,41 +38,17 @@ public class ProdArteControl implements IProdArteControl {
 	private ObservableList<ProdArte> arteObsList = FXCollections.observableArrayList();
 	
 	
-	
-	
-
-	//public ProdArteControl(TextField tfCodigoObra, TextField tfNomeObra,
-	//		TextField tfNomeArtista, TextField tfMaterial,TextField tfValor,TextField tfAno,  TextArea taListaArtes) {
-		
-	//	this.tfCodigoObra = tfCodigoObra;
-	//	this.tfNomeObra = tfNomeObra;
-	//	this.tfNomeArtista = tfNomeArtista;
-	//	this.tfMaterial = tfMaterial;
-	//	this.tfValor = tfValor;
-	//	this.tfAno = tfAno;
-	//	this.taListaArtes = taListaArtes;
-
-
-	 //   }
-		
-
-
 	public ProdArteControl() {
         TableColumn<ProdArte, String> col11 = new TableColumn<>("Nome da Obra");
         col11.setCellValueFactory(new PropertyValueFactory<>("nomeObra"));
-        
         TableColumn<ProdArte, String> col22 = new TableColumn<>("Material Usado");
         col22.setCellValueFactory(new PropertyValueFactory<>("material"));
-        
         TableColumn<ProdArte, String> col33 = new TableColumn<>("Nome do Artista");
         col33.setCellValueFactory(new PropertyValueFactory<>("artista"));
-        
         TableColumn<ProdArte, String> col44 = new TableColumn<>("Ano da Obra");
         col44.setCellValueFactory(new PropertyValueFactory<>("ano"));
-
         TableColumn<ProdArte, String> col55 = new TableColumn<>("Valor da Obra");
         col55.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        
         tableArte.getColumns().addAll(col11, col22, col33, col44, col55);
 
         tableArte.setItems(arteObsList);
@@ -138,56 +112,50 @@ public class ProdArteControl implements IProdArteControl {
 
 	@Override
 	public void buscarArte() throws ClassNotFoundException, SQLException {
-    IProdArteDao arteDao = new ProdArteDao();
-    
-    for (ProdArte a : arteObsList) {
+		limparCamposArte();
+		IProdArteDao arteDao = new ProdArteDao();
+	    List<ProdArte> listaArte = arteDao.buscarArtes();
+  
+    for (ProdArte a : listaArte ) {
     if (a != null && a.getNomeObra().contains(nomeObra.get())) {
 	    nomeObra.set(a.getNomeObra());
-    nomeObra.set(a.getNomeObra());
-    material.set(a.getMaterial());
-    idObra.set(Integer.toString(a.getIdObra()));
-    nomeArtista.set(a.getArtista());
-    valor.set(Float.toString(a.getValor()));
-    ano.set(Integer.toString(a.getAno()));
-    
+        material.set(a.getMaterial());
+        idObra.set(Integer.toString(a.getIdObra()));
+        nomeArtista.set(a.getArtista());
+        valor.set(Float.toString(a.getValor()));
+        ano.set(Integer.toString(a.getAno()));
 
     
     break;
       }
     }	    	
-    	
-    	
-       List<ProdArte> listaArte = arteDao.buscarArtes();
-       arteObsList.clear();
-       arteObsList.addAll(listaArte);
- 
-    }
+  }
 	
 
 	@Override
 	public void buscarArtes() throws ClassNotFoundException, SQLException {
 		limparCamposArte();
-		
-		ProdArteDao aDao = new ProdArteDao();
-		List<ProdArte> listaArte = aDao.buscarArtes();
-		
-		taListaArtes.setText("");
-		
+		IProdArteDao arteDao = new ProdArteDao();
+	    List<ProdArte> listaArte = arteDao.buscarArtes();
+	    arteObsList.clear();
+        arteObsList.addAll(listaArte);
 		StringBuffer sb = new StringBuffer("Código da Obra\t\t\t\tNome da Obra\t\t\t\t\tNome do Artista\t\t\t\t\tMaterial\t\t\t\t\tValor\t\t\t\t\tAno\n");
+		
+		
 		for (ProdArte a: listaArte) {
 			sb.append(a.getIdObra()+"\t\t\t\t"+a.getNomeObra()+"\t\t\t\t"+a.getArtista()+"\t\t\t\t"+a.getMaterial()+"\t\t\t\t"+a.getValor()+"\t\t\t\t"+a.getAno()+"\n");
 		}
-		
-		taListaArtes.setText(sb.toString());
+
 	}
-	
+
+	    
 	private void limparCamposArte() {
-		tfCodigoObra.setText("");
-		tfNomeObra.setText("");
-		tfNomeArtista.setText("");
-		tfMaterial.setText("");
-		tfValor.setText("");
-		tfAno.setText("");
+	    nomeObra.set("");
+        material.set("");
+        idObra.set("");
+        nomeArtista.set("");
+        valor.set("");
+        ano.set("");
 	}
 
 	 public TableView<ProdArte> getTable() {
