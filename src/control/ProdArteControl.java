@@ -85,24 +85,31 @@ public class ProdArteControl implements IProdArteControl {
 	}
 
 	@Override
-	public void atualizarArte(ProdArte a) throws ClassNotFoundException, SQLException {
+	public void atualizarArte() throws ClassNotFoundException, SQLException {
+		ProdArte  a = new ProdArte();
 		ProdArteDao aDao = new ProdArteDao();
 		aDao.atualizarArte(a);
 		limparCamposArte();
-		buscarArtes();
+
 	}
 
 	@Override
-	public void excluirArte(ProdArte a) throws ClassNotFoundException, SQLException {
+	public void excluirArte() throws ClassNotFoundException, SQLException {
+		ProdArte  a = new ProdArte();
 		ProdArteDao aDao = new ProdArteDao();
+	//	a.setIdObra(Integer.parseInt(idObra.get()));
+		a.setNomeObra(nomeObra.get());
+        a.setMaterial(material.get());
+		a.setArtista(nomeArtista.get());
+        a.setAno(0);
+        a.setValor(0);
 		aDao.excluirArte(a);
-		limparCamposArte();
-		buscarArtes();
+	//	limparCamposArte();
+
 	}
 
 	@Override
 	public void buscarArte() throws ClassNotFoundException, SQLException {
-		//limparCamposArte();
 		IProdArteDao arteDao = new ProdArteDao();
 	    List<ProdArte> listaArte = arteDao.buscarArtes();
   
@@ -110,7 +117,7 @@ public class ProdArteControl implements IProdArteControl {
     if (a != null && a.getNomeObra().contains(nomeObra.get())) {
 	    nomeObra.set(a.getNomeObra());
         material.set(a.getMaterial());
-        idObra.set(Integer.toString(a.getIdObra()));
+     //   idObra.set(Integer.toString(a.getIdObra()));
         nomeArtista.set(a.getArtista());
         valor.set(Float.toString(a.getValor()));
         ano.set(Integer.toString(a.getAno()));
@@ -141,7 +148,7 @@ public class ProdArteControl implements IProdArteControl {
 	public void limparCamposArte() {
 	    nomeObra.set("");
         material.set("");
-        idObra.set("");
+       // idObra.set("");
         nomeArtista.set("");
         valor.set("");
         ano.set("");

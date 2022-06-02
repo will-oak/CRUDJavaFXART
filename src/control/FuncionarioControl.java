@@ -61,19 +61,26 @@ public class FuncionarioControl implements IFuncionarioControl {
 	}
 
 	@Override
-	public void atualizarFuncionario(Funcionario f) throws ClassNotFoundException, SQLException {
-		FuncionarioDao fDao = new FuncionarioDao();
-		fDao.atualizaFuncionario(f);
-		limpaCamposFuncionario();
-		buscarFuncionarios();
+	public void atualizarFuncionario() throws ClassNotFoundException, SQLException {
+		Funcionario f = new Funcionario();
+		FuncionarioDao fd = new FuncionarioDao();
+		f.setNome(nomeFunc.get());
+		f.setCpf(Integer.parseInt(cpf.get())); 
+		fd.atualizaFuncionario(f);
+	//	limpaCamposFuncionario();
+	//	buscarFuncionarios();
 	}
 
+
 	@Override
-	public void excluirFuncionario(Funcionario f) throws ClassNotFoundException, SQLException {
-		FuncionarioDao fDao = new FuncionarioDao();
-		fDao.excluiFuncionario(f);
+	public void excluirFuncionario() throws ClassNotFoundException, SQLException {
+		Funcionario f = new Funcionario();
+		FuncionarioDao fd = new FuncionarioDao();
+		f.setNome(nomeFunc.get());
+		f.setCpf(Integer.parseInt(cpf.get())); 
+		fd.excluiFuncionario(f);
 		limpaCamposFuncionario();
-		buscarFuncionarios();
+	//	buscarFuncionarios();
 	}
 
 	@Override

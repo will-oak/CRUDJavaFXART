@@ -33,7 +33,7 @@ private Connection c;
 
 	@Override
 	public void atualizaFuncionario(Funcionario f) throws SQLException {
-		String sql = "UPDATE funcionario SET nome = ?, CPF = ? WHERE id = ?";
+		String sql = "UPDATE funcionario SET nome = ?, CPF = ? WHERE CPF = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setString(1, f.getNome());
@@ -46,10 +46,10 @@ private Connection c;
 
 	@Override
 	public void excluiFuncionario(Funcionario f) throws SQLException {		
-		String sql = "DELETE FROM funcionario WHERE id = ?";
+		String sql = "DELETE FROM funcionario WHERE CPF = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
-		ps.setInt(1, f.getId());
+		ps.setInt(1, f.getCpf());
 		ps.execute();
 		ps.close();		
 	}
