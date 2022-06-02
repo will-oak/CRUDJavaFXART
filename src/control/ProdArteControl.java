@@ -9,25 +9,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Funcionario;
 import model.ProdArte;
-import persistence.FuncionarioDao;
-import persistence.IFuncionarioDao;
 import persistence.IProdArteDao;
 import persistence.ProdArteDao;
 
 public class ProdArteControl implements IProdArteControl {
 	
 
-	private TextField tfCodigoObra;
-	private TextField tfNomeObra;
-	private TextField tfNomeArtista;
-	private TextField tfMaterial;
-	private TextField tfValor;
-	private TextField tfAno;
 	private StringProperty idObra = new SimpleStringProperty("");
 	private StringProperty nomeObra = new SimpleStringProperty("");
 	private StringProperty nomeArtista = new SimpleStringProperty("");
@@ -91,6 +80,7 @@ public class ProdArteControl implements IProdArteControl {
         a.setValor(Float.parseFloat(valor.get()));
         arteObsList.add(a);
         aDao.inserirArte(a);
+        limparCamposArte();
         
 	}
 
@@ -112,7 +102,7 @@ public class ProdArteControl implements IProdArteControl {
 
 	@Override
 	public void buscarArte() throws ClassNotFoundException, SQLException {
-		limparCamposArte();
+		//limparCamposArte();
 		IProdArteDao arteDao = new ProdArteDao();
 	    List<ProdArte> listaArte = arteDao.buscarArtes();
   
@@ -124,7 +114,7 @@ public class ProdArteControl implements IProdArteControl {
         nomeArtista.set(a.getArtista());
         valor.set(Float.toString(a.getValor()));
         ano.set(Integer.toString(a.getAno()));
-
+       
     
     break;
       }
@@ -134,7 +124,6 @@ public class ProdArteControl implements IProdArteControl {
 
 	@Override
 	public void buscarArtes() throws ClassNotFoundException, SQLException {
-		limparCamposArte();
 		IProdArteDao arteDao = new ProdArteDao();
 	    List<ProdArte> listaArte = arteDao.buscarArtes();
 	    arteObsList.clear();
@@ -149,7 +138,7 @@ public class ProdArteControl implements IProdArteControl {
 	}
 
 	    
-	private void limparCamposArte() {
+	public void limparCamposArte() {
 	    nomeObra.set("");
         material.set("");
         idObra.set("");

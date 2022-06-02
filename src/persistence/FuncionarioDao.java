@@ -56,7 +56,7 @@ private Connection c;
 
 	@Override
 	public Funcionario buscaFuncionario(Funcionario f) throws SQLException {
-		String sql = "SELECT id, nome, CPF FROM funcionario WHERE id = ?";
+		String sql = "SELECT id, nome, CPF FROM funcionario WHERE nome = ?";
 		
 		PreparedStatement ps = c.prepareStatement(sql);
 		ps.setInt(1, f.getId());

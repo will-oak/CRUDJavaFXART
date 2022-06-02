@@ -3,18 +3,16 @@ package control;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.Funcionario;
-import persistence.FuncionarioDao;
-import persistence.IFuncionarioDao;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Funcionario;
+import persistence.FuncionarioDao;
+import persistence.IFuncionarioDao;
 
 public class FuncionarioControl implements IFuncionarioControl {
 
@@ -59,6 +57,7 @@ public class FuncionarioControl implements IFuncionarioControl {
 		f.setCpf(Integer.parseInt(cpf.get())); 
 		funcObsList.add(f);
 		fd.insereFuncionario(f);
+		limpaCamposFuncionario();
 	}
 
 	@Override
@@ -79,7 +78,6 @@ public class FuncionarioControl implements IFuncionarioControl {
 
 	@Override
 	public void buscarFuncionario() throws ClassNotFoundException, SQLException {
-		limpaCamposFuncionario();
 		IFuncionarioDao funcDao = new FuncionarioDao();
 		List<Funcionario> listaFunc = funcDao.buscaFuncionarios();
 		
@@ -97,7 +95,6 @@ public class FuncionarioControl implements IFuncionarioControl {
 
 	@Override
 	public void buscarFuncionarios() throws ClassNotFoundException, SQLException {
-		limpaCamposFuncionario();
 		FuncionarioDao fDao = new FuncionarioDao();
 		List<Funcionario> listaFuncionarios = fDao.buscaFuncionarios();
 		funcObsList.clear();

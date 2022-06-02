@@ -5,6 +5,7 @@ import control.FuncionarioControl;
 import control.ProdArteControl;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,14 +14,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -35,7 +39,7 @@ public class Main extends Application {
 
 		Image img = new Image("/Principal/Splash.jpg");	
 		Button btnIniciar = new Button("Iniciar");
-		btnIniciar.setPrefWidth(50.0);
+		btnIniciar.setPrefWidth(80.0);
 		btnIniciar.setPrefHeight(50.0);
 
 
@@ -71,12 +75,15 @@ public class Main extends Application {
 		Button btnConsultarTodosFuncionarios = new Button("Pesquisar Todos Funcionarios");
 		Button btnInserirFuncionario = new Button("Incluir");
 		Button btnConsultarFuncionario = new Button("Pesquisar por nome");
-		Button btnAtualizarFuncionario = new Button("Atualizar");
-		Button btnExcluirFuncionario = new Button("Excluir");
+		Button btnAtualizarFuncionario = new Button("Atualizar por nome");
+		Button btnExcluirFuncionario = new Button("Excluir por nome");
 		Button btnLimpaFuncionario = new Button("Limpar Campos");
 		Button btnCadastrarArte = new Button("Cadastrar Arte");
 		Button btnVoltarFunc = new Button("Voltar ao Menu Anterior");
+		btnCadastrarArte.setStyle("-fx-background-color:#9370DB; ");
 
+		
+		btnCadastrarArte.backgroundProperty();
 		GridPane painelScreenFunc = new GridPane();
 		Scene scnScreenFunc = new Scene(painelScreenFunc, 600, 250);
 		
@@ -89,21 +96,15 @@ public class Main extends Application {
 
 
         
-		btnConsultarTodosFuncionarios.setOnAction( e -> {
-			try {
-				stage.setScene(scnScreenFuncTable);
-				funcControl.buscarFuncionarios();
-			} catch (ClassNotFoundException | SQLException e1) {
-
-				e1.printStackTrace();
-			}
-		});
 
 
 		btnInserirFuncionario.setOnAction( e -> {
 			try {
 				funcControl.inserirFuncionario();
+				stage.setScene(scnScreenFuncTable);
+				funcControl.buscarFuncionarios();
 			} catch (ClassNotFoundException | SQLException e1) {
+				
 
 				e1.printStackTrace();
 			}
@@ -124,6 +125,17 @@ public class Main extends Application {
 		btnConsultarFuncionario.setOnAction(e ->	{
 			try {
 				funcControl.buscarFuncionario();
+			} catch (ClassNotFoundException | SQLException e1) {
+
+				e1.printStackTrace();
+			}
+		});
+
+		
+		btnConsultarTodosFuncionarios.setOnAction( e -> {
+			try {
+				stage.setScene(scnScreenFuncTable);
+				funcControl.buscarFuncionarios();
 			} catch (ClassNotFoundException | SQLException e1) {
 
 				e1.printStackTrace();
@@ -168,12 +180,16 @@ public class Main extends Application {
 		Button btnInserirArte = new Button("Incluir");
 		Button btnConsultarArte = new Button("Pesquisar por nome");
 		Button btnConsultarTodasArtes = new Button("Pesquisar Todas Artes");
-		Button btnAtualizarArte = new Button("Atualizar");
-		Button btnExcluirArte = new Button("Excluir");
+		Button btnAtualizarArte = new Button("Atualizar por nome");
+		Button btnExcluirArte = new Button("Excluir por nome");
 		Button btnVoltarArte = new Button("Voltar ao Menu Anterior");
 		Button btnCadastrarFunc = new Button("Cadastrar Funcionario");
-
-
+		Button btnLimpaArte = new Button("Limpar Campos");
+		btnCadastrarFunc.setStyle("-fx-background-color:#9370DB; ");
+		btnInserirArte.setStyle("-fx-background-color:#98FB98; ");
+		btnConsultarArte.setStyle("-fx-background-color:#FFFF00; ");
+		btnConsultarTodasArtes.setStyle("-fx-background-color:#FF8C00; ");
+		
 		Label lblIdObra = new Label("Código da Obra: ");
 		TextField tfIdObra = new TextField("");
 
@@ -215,7 +231,7 @@ public class Main extends Application {
 		painelScreenArte.add(lblAno, 0,5);
 		painelScreenArte.add(tfAno,1,5);
 
-		fPScreenArte.getChildren().addAll(btnInserirArte, btnConsultarArte, btnConsultarTodasArtes, btnAtualizarArte, btnExcluirArte, btnCadastrarFunc);
+		fPScreenArte.getChildren().addAll(btnInserirArte, btnConsultarArte, btnConsultarTodasArtes, btnAtualizarArte, btnExcluirArte, btnLimpaArte,btnCadastrarFunc);
 
 		Bindings.bindBidirectional(arteControl.idObraProperty(), tfIdObra.textProperty());
 		Bindings.bindBidirectional(arteControl.nomeObraProperty(), tfNomeObra.textProperty());
@@ -238,6 +254,8 @@ public class Main extends Application {
 		btnInserirArte.setOnAction( e -> {
 			try {
 				arteControl.inserirArte();
+				stage.setScene(scnScreenArteTable);
+				arteControl.buscarArtes();
 			} catch (ClassNotFoundException | SQLException e1) {
 
 				e1.printStackTrace();
@@ -251,6 +269,10 @@ public class Main extends Application {
 
 				e1.printStackTrace();
 			}
+		});
+		
+		btnLimpaArte.setOnAction( e -> {
+			arteControl.limparCamposArte();
 		});
 
 		btnConsultarTodasArtes.setOnAction( e -> {
@@ -278,7 +300,7 @@ public class Main extends Application {
 		btnIniciar.setOnAction( e -> {
 			stage.setScene(scnScreenFunc);
 		});
-
+		stage.setResizable(false);
 		stage.setScene(splashScreen);
 		stage.show();
 
