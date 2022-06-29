@@ -1,22 +1,41 @@
 package model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "prodarte")
+
 public class ProdArte {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_obra")
+	@NotNull
 	private int idObra;
+    
+	@Column(name = "obra", length = 100)
+	@NotNull
 	private String nomeObra;
+	@Column(name = "material", length = 200)
+	@NotNull
 	private String material;
+	@Column(name = "artista", length = 300)
+	@NotNull
 	private String artista;
+	@Column(name = "ano")
+	@NotNull
 	private int ano;
+	@Column(name = "valor")
+	@NotNull
 	private float valor;
 	private String vazioArte = null;
-	
-	
-	public String getVazioArte() {
-		return vazioArte;
-	}
-	public void setVazioArte(String vazioArte) {
-		this.vazioArte = vazioArte;
-	}
+
 	public int getIdObra() {
 		return idObra;
 	}
